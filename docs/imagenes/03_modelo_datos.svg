@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="860" viewBox="0 0 1600 860">
+<rect width="100%" height="100%" fill="white"/>
+<text x="80" y="60" font-family="Arial, sans-serif" font-size="35" font-weight="bold" fill="#20252a" text-anchor="start">Modelo de datos</text>
+<text x="80" y="102" font-family="Arial, sans-serif" font-size="26" font-weight="normal" fill="#56616b" text-anchor="start">Dos tablas en SQLite. Cada registro puede tener una fotografía o ninguna.</text>
+<rect x="80" y="220" width="600" height="342" fill="white" stroke="#314f66" stroke-width="2"/>
+<rect x="80" y="220" width="600" height="70" fill="#f2f4f6" stroke="#314f66" stroke-width="2"/>
+<text x="104" y="267" font-family="Arial, sans-serif" font-size="32" font-weight="bold" fill="#20252a" text-anchor="start">Registros</text>
+<text x="104" y="334" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="#314f66" text-anchor="start">PK</text>
+<text x="220" y="334" font-family="Arial, sans-serif" font-size="27" font-weight="normal" fill="#20252a" text-anchor="start">Id</text>
+<text x="656" y="334" font-family="Arial, sans-serif" font-size="25" font-weight="normal" fill="#56616b" text-anchor="end">INTEGER</text>
+<polyline points="80,358 680,358" fill="none" stroke="#ced4d9" stroke-width="1"/>
+<text x="104" y="402" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="#314f66" text-anchor="start"></text>
+<text x="220" y="402" font-family="Arial, sans-serif" font-size="27" font-weight="normal" fill="#20252a" text-anchor="start">Titulo</text>
+<text x="656" y="402" font-family="Arial, sans-serif" font-size="25" font-weight="normal" fill="#56616b" text-anchor="end">TEXT</text>
+<polyline points="80,426 680,426" fill="none" stroke="#ced4d9" stroke-width="1"/>
+<text x="104" y="470" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="#314f66" text-anchor="start"></text>
+<text x="220" y="470" font-family="Arial, sans-serif" font-size="27" font-weight="normal" fill="#20252a" text-anchor="start">Descripcion</text>
+<text x="656" y="470" font-family="Arial, sans-serif" font-size="25" font-weight="normal" fill="#56616b" text-anchor="end">TEXT</text>
+<polyline points="80,494 680,494" fill="none" stroke="#ced4d9" stroke-width="1"/>
+<text x="104" y="538" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="#314f66" text-anchor="start"></text>
+<text x="220" y="538" font-family="Arial, sans-serif" font-size="27" font-weight="normal" fill="#20252a" text-anchor="start">FechaCreacion</text>
+<text x="656" y="538" font-family="Arial, sans-serif" font-size="25" font-weight="normal" fill="#56616b" text-anchor="end">TEXT</text>
+<rect x="920" y="220" width="600" height="206" fill="white" stroke="#314f66" stroke-width="2"/>
+<rect x="920" y="220" width="600" height="70" fill="#f2f4f6" stroke="#314f66" stroke-width="2"/>
+<text x="944" y="267" font-family="Arial, sans-serif" font-size="32" font-weight="bold" fill="#20252a" text-anchor="start">Fotografias</text>
+<text x="944" y="334" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="#314f66" text-anchor="start">PK / FK</text>
+<text x="1060" y="334" font-family="Arial, sans-serif" font-size="27" font-weight="normal" fill="#20252a" text-anchor="start">RegistroId</text>
+<text x="1496" y="334" font-family="Arial, sans-serif" font-size="25" font-weight="normal" fill="#56616b" text-anchor="end">INTEGER</text>
+<polyline points="920,358 1520,358" fill="none" stroke="#ced4d9" stroke-width="1"/>
+<text x="944" y="402" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="#314f66" text-anchor="start"></text>
+<text x="1060" y="402" font-family="Arial, sans-serif" font-size="27" font-weight="normal" fill="#20252a" text-anchor="start">FotoBase64</text>
+<text x="1496" y="402" font-family="Arial, sans-serif" font-size="25" font-weight="normal" fill="#56616b" text-anchor="end">TEXT</text>
+<polyline points="680,324 920,324" fill="none" stroke="#314f66" stroke-width="3"/>
+<polyline points="701,309 701,339" fill="none" stroke="#314f66" stroke-width="3"/>
+<polyline points="899,309 899,339" fill="none" stroke="#314f66" stroke-width="3"/>
+<text x="714" y="296" font-family="Arial, sans-serif" font-size="29" font-weight="bold" fill="#20252a" text-anchor="start">1</text>
+<text x="836" y="296" font-family="Arial, sans-serif" font-size="29" font-weight="bold" fill="#20252a" text-anchor="start">0..1</text>
+<text x="792" y="370" font-family="Arial, sans-serif" font-size="24" font-weight="normal" fill="#56616b" text-anchor="middle">tiene</text>
+<text x="80" y="615" font-family="Arial, sans-serif" font-size="26" font-weight="normal" fill="#20252a" text-anchor="start">Titulo: obligatorio, de 3 a 100 caracteres.</text>
+<text x="80" y="660" font-family="Arial, sans-serif" font-size="26" font-weight="normal" fill="#20252a" text-anchor="start">Descripcion: obligatoria, de 1 a 500 caracteres.</text>
+<text x="80" y="705" font-family="Arial, sans-serif" font-size="26" font-weight="normal" fill="#20252a" text-anchor="start">FechaCreacion: la asigna el servidor en UTC.</text>
+<text x="920" y="459" font-family="Arial, sans-serif" font-size="23" font-weight="normal" fill="#20252a" text-anchor="start">RegistroId también es clave foránea hacia Registros.Id.</text>
+<text x="920" y="504" font-family="Arial, sans-serif" font-size="23" font-weight="normal" fill="#20252a" text-anchor="start">Al eliminar un registro, su fotografía se elimina en cascada.</text>
+<text x="80" y="777" font-family="Arial, sans-serif" font-size="25" font-weight="normal" fill="#56616b" text-anchor="start">La API valida que la fotografía sea Base64 válido y que su contenido decodificado no supere 2 MiB.</text>
+<text x="80" y="821" font-family="Arial, sans-serif" font-size="25" font-weight="normal" fill="#56616b" text-anchor="start">PK: clave primaria. FK: clave foránea. Sin fotografía, no se crea una fila en Fotografias.</text>
+</svg>

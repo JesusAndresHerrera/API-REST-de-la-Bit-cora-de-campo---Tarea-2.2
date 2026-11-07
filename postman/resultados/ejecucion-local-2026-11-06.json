@@ -1,0 +1,437 @@
+{
+  "proyecto": "Bitácora de campo - Tarea 2.2",
+  "fecha": "2026-11-06",
+  "zonaHoraria": "America/Tegucigalpa",
+  "inicio": "2026-11-06T23:01:39.592000-06:00",
+  "fin": "2026-11-06T23:01:43.224000-06:00",
+  "ejecutor": "Newman 6.2.3",
+  "alcance": "Colección exportada de Postman ejecutada contra la API local con una copia aislada de SQLite.",
+  "coleccion": "postman/Bitacora-2.2.postman_collection.json",
+  "coleccionSha256": "93312c004a23d27cd754227f103dc68cab56199a5418869b2e436d09a5f904d1",
+  "baseUrlPrueba": "http://127.0.0.1:63092",
+  "baseUrlEntornoEntregado": "http://localhost:5106",
+  "resultado": {
+    "solicitudes": 16,
+    "comprobacionesAprobadas": 42,
+    "comprobacionesFallidas": 0,
+    "erroresEjecucion": 0,
+    "codigoSalida": 0
+  },
+  "baseAisladaAntes": {
+    "Registros": 0,
+    "Fotografias": 0
+  },
+  "baseAisladaDespues": {
+    "Registros": 0,
+    "Fotografias": 0
+  },
+  "revisionEncabezados": {
+    "incidencias": [],
+    "conforme": true
+  },
+  "casos": [
+    {
+      "nombre": "01 POST - Crear con fotografía (201)",
+      "metodo": "POST",
+      "ruta": "/api/registros",
+      "estadoHttp": 201,
+      "comprobaciones": [
+        {
+          "nombre": "HTTP 201",
+          "aprobada": true
+        },
+        {
+          "nombre": "El servidor asigna un ID válido",
+          "aprobada": true
+        },
+        {
+          "nombre": "Título y foto recibidos",
+          "aprobada": true
+        },
+        {
+          "nombre": "Fecha UTC asignada por el servidor",
+          "aprobada": true
+        },
+        {
+          "nombre": "Location apunta al registro creado",
+          "aprobada": true
+        }
+      ],
+      "encabezadosSolicitud": {
+        "accept": "application/json",
+        "content-type": "application/json"
+      },
+      "encabezadosRespuesta": {
+        "content-type": "application/json; charset=utf-8",
+        "location": "/api/registros/4"
+      }
+    },
+    {
+      "nombre": "02 GET - Listar sin fotografías (200)",
+      "metodo": "GET",
+      "ruta": "/api/registros",
+      "estadoHttp": 200,
+      "comprobaciones": [
+        {
+          "nombre": "HTTP 200",
+          "aprobada": true
+        },
+        {
+          "nombre": "Lista de registros sin FotoBase64",
+          "aprobada": true
+        },
+        {
+          "nombre": "El registro de esta ejecución está en la lista",
+          "aprobada": true
+        }
+      ],
+      "encabezadosSolicitud": {
+        "accept": "application/json"
+      },
+      "encabezadosRespuesta": {
+        "content-type": "application/json; charset=utf-8"
+      }
+    },
+    {
+      "nombre": "03 GET - Formato XML no disponible (406)",
+      "metodo": "GET",
+      "ruta": "/api/registros",
+      "estadoHttp": 406,
+      "comprobaciones": [
+        {
+          "nombre": "HTTP 406",
+          "aprobada": true
+        },
+        {
+          "nombre": "ProblemDetails comprensible",
+          "aprobada": true
+        }
+      ],
+      "encabezadosSolicitud": {
+        "accept": "application/xml"
+      },
+      "encabezadosRespuesta": {
+        "content-type": "application/problem+json"
+      }
+    },
+    {
+      "nombre": "04 GET - Consultar detalle con fotografía (200)",
+      "metodo": "GET",
+      "ruta": "/api/registros/4",
+      "estadoHttp": 200,
+      "comprobaciones": [
+        {
+          "nombre": "HTTP 200",
+          "aprobada": true
+        },
+        {
+          "nombre": "Detalle e imagen coinciden con lo creado",
+          "aprobada": true
+        }
+      ],
+      "encabezadosSolicitud": {
+        "accept": "application/json"
+      },
+      "encabezadosRespuesta": {
+        "content-type": "application/json; charset=utf-8"
+      }
+    },
+    {
+      "nombre": "05 POST - Título demasiado corto (400)",
+      "metodo": "POST",
+      "ruta": "/api/registros",
+      "estadoHttp": 400,
+      "comprobaciones": [
+        {
+          "nombre": "HTTP 400",
+          "aprobada": true
+        },
+        {
+          "nombre": "ProblemDetails comprensible",
+          "aprobada": true
+        },
+        {
+          "nombre": "Detalle del campo Titulo",
+          "aprobada": true
+        }
+      ],
+      "encabezadosSolicitud": {
+        "accept": "application/json",
+        "content-type": "application/json"
+      },
+      "encabezadosRespuesta": {
+        "content-type": "application/problem+json; charset=utf-8"
+      }
+    },
+    {
+      "nombre": "06 POST - Base64 inválido (400)",
+      "metodo": "POST",
+      "ruta": "/api/registros",
+      "estadoHttp": 400,
+      "comprobaciones": [
+        {
+          "nombre": "HTTP 400",
+          "aprobada": true
+        },
+        {
+          "nombre": "ProblemDetails comprensible",
+          "aprobada": true
+        },
+        {
+          "nombre": "Detalle del campo FotoBase64",
+          "aprobada": true
+        }
+      ],
+      "encabezadosSolicitud": {
+        "accept": "application/json",
+        "content-type": "application/json"
+      },
+      "encabezadosRespuesta": {
+        "content-type": "application/problem+json; charset=utf-8"
+      }
+    },
+    {
+      "nombre": "07 POST - Descripción de 501 caracteres (400)",
+      "metodo": "POST",
+      "ruta": "/api/registros",
+      "estadoHttp": 400,
+      "comprobaciones": [
+        {
+          "nombre": "HTTP 400",
+          "aprobada": true
+        },
+        {
+          "nombre": "ProblemDetails comprensible",
+          "aprobada": true
+        },
+        {
+          "nombre": "Detalle del campo Descripcion",
+          "aprobada": true
+        }
+      ],
+      "encabezadosSolicitud": {
+        "accept": "application/json",
+        "content-type": "application/json"
+      },
+      "encabezadosRespuesta": {
+        "content-type": "application/problem+json; charset=utf-8"
+      }
+    },
+    {
+      "nombre": "08 POST - Foto de más de 2 MiB (400)",
+      "metodo": "POST",
+      "ruta": "/api/registros",
+      "estadoHttp": 400,
+      "comprobaciones": [
+        {
+          "nombre": "HTTP 400",
+          "aprobada": true
+        },
+        {
+          "nombre": "ProblemDetails comprensible",
+          "aprobada": true
+        },
+        {
+          "nombre": "Detalle del campo FotoBase64",
+          "aprobada": true
+        }
+      ],
+      "encabezadosSolicitud": {
+        "accept": "application/json",
+        "content-type": "application/json"
+      },
+      "encabezadosRespuesta": {
+        "content-type": "application/problem+json; charset=utf-8"
+      }
+    },
+    {
+      "nombre": "09 PUT - Entrada inválida (400)",
+      "metodo": "PUT",
+      "ruta": "/api/registros/4",
+      "estadoHttp": 400,
+      "comprobaciones": [
+        {
+          "nombre": "HTTP 400",
+          "aprobada": true
+        },
+        {
+          "nombre": "ProblemDetails comprensible",
+          "aprobada": true
+        },
+        {
+          "nombre": "Detalle del campo Titulo",
+          "aprobada": true
+        }
+      ],
+      "encabezadosSolicitud": {
+        "accept": "application/json",
+        "content-type": "application/json"
+      },
+      "encabezadosRespuesta": {
+        "content-type": "application/problem+json; charset=utf-8"
+      }
+    },
+    {
+      "nombre": "10 PUT - Editar y quitar fotografía (204)",
+      "metodo": "PUT",
+      "ruta": "/api/registros/4",
+      "estadoHttp": 204,
+      "comprobaciones": [
+        {
+          "nombre": "HTTP 204",
+          "aprobada": true
+        },
+        {
+          "nombre": "Respuesta sin cuerpo",
+          "aprobada": true
+        }
+      ],
+      "encabezadosSolicitud": {
+        "accept": "application/json",
+        "content-type": "application/json"
+      },
+      "encabezadosRespuesta": {}
+    },
+    {
+      "nombre": "11 GET - Verificar actualización y fecha (200)",
+      "metodo": "GET",
+      "ruta": "/api/registros/4",
+      "estadoHttp": 200,
+      "comprobaciones": [
+        {
+          "nombre": "HTTP 200",
+          "aprobada": true
+        },
+        {
+          "nombre": "Cambios guardados y fotografía eliminada",
+          "aprobada": true
+        },
+        {
+          "nombre": "La edición conserva FechaCreacion",
+          "aprobada": true
+        }
+      ],
+      "encabezadosSolicitud": {
+        "accept": "application/json"
+      },
+      "encabezadosRespuesta": {
+        "content-type": "application/json; charset=utf-8"
+      }
+    },
+    {
+      "nombre": "12 DELETE - Eliminar el registro propio (204)",
+      "metodo": "DELETE",
+      "ruta": "/api/registros/4",
+      "estadoHttp": 204,
+      "comprobaciones": [
+        {
+          "nombre": "HTTP 204",
+          "aprobada": true
+        },
+        {
+          "nombre": "Respuesta sin cuerpo",
+          "aprobada": true
+        }
+      ],
+      "encabezadosSolicitud": {
+        "accept": "application/json"
+      },
+      "encabezadosRespuesta": {}
+    },
+    {
+      "nombre": "13 GET - Detalle del registro eliminado (404)",
+      "metodo": "GET",
+      "ruta": "/api/registros/4",
+      "estadoHttp": 404,
+      "comprobaciones": [
+        {
+          "nombre": "HTTP 404",
+          "aprobada": true
+        },
+        {
+          "nombre": "ProblemDetails comprensible",
+          "aprobada": true
+        }
+      ],
+      "encabezadosSolicitud": {
+        "accept": "application/json"
+      },
+      "encabezadosRespuesta": {
+        "content-type": "application/problem+json; charset=utf-8"
+      }
+    },
+    {
+      "nombre": "14 PUT - Actualizar el registro eliminado (404)",
+      "metodo": "PUT",
+      "ruta": "/api/registros/4",
+      "estadoHttp": 404,
+      "comprobaciones": [
+        {
+          "nombre": "HTTP 404",
+          "aprobada": true
+        },
+        {
+          "nombre": "ProblemDetails comprensible",
+          "aprobada": true
+        }
+      ],
+      "encabezadosSolicitud": {
+        "accept": "application/json",
+        "content-type": "application/json"
+      },
+      "encabezadosRespuesta": {
+        "content-type": "application/problem+json; charset=utf-8"
+      }
+    },
+    {
+      "nombre": "15 DELETE - Repetir la eliminación (404)",
+      "metodo": "DELETE",
+      "ruta": "/api/registros/4",
+      "estadoHttp": 404,
+      "comprobaciones": [
+        {
+          "nombre": "HTTP 404",
+          "aprobada": true
+        },
+        {
+          "nombre": "ProblemDetails comprensible",
+          "aprobada": true
+        }
+      ],
+      "encabezadosSolicitud": {
+        "accept": "application/json"
+      },
+      "encabezadosRespuesta": {
+        "content-type": "application/problem+json; charset=utf-8"
+      }
+    },
+    {
+      "nombre": "16 GET - Confirmar limpieza (200)",
+      "metodo": "GET",
+      "ruta": "/api/registros",
+      "estadoHttp": 200,
+      "comprobaciones": [
+        {
+          "nombre": "HTTP 200",
+          "aprobada": true
+        },
+        {
+          "nombre": "No queda el registro creado por esta ejecución",
+          "aprobada": true
+        }
+      ],
+      "encabezadosSolicitud": {
+        "accept": "application/json"
+      },
+      "encabezadosRespuesta": {
+        "content-type": "application/json; charset=utf-8"
+      }
+    }
+  ],
+  "aclaraciones": [
+    "Newman ejecuta las mismas solicitudes y pruebas de la colección de Postman; este archivo no acredita una ejecución nueva en la interfaz de Postman.",
+    "El puerto aleatorio evita interferir con la API de demostración en localhost:5106.",
+    "La prueba no modifica la base de datos de la aplicación: utiliza una copia aislada.",
+    "El error 500 no forma parte de esta colección; su comprobación pertenece a una prueba HTTP separada."
+  ]
+}

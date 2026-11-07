@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Bitácora de campo | Grupo 04</title><style>
+*{box-sizing:border-box}body{margin:0;font:16px/1.6 Arial,sans-serif;color:#20252b;background:#f5f6f7}
+header,main{max-width:1180px;margin:auto;padding:24px 32px}header{background:#fff;border-bottom:1px solid #ccd3dc}
+h1{font-size:28px;margin:0 0 6px}h2{font-size:23px;margin:24px 0 10px}h3{font-size:19px;margin:18px 0 8px}
+p{margin:8px 0 14px}nav{display:flex;gap:24px;flex-wrap:wrap;margin:18px 0 0}a{color:#224d72}
+section,figure{background:white;border:1px solid #d5dbe1;padding:24px;margin:20px 0}
+figure{padding:18px}img{display:block;max-width:100%;height:auto;margin:16px auto 0;border:1px solid #e0e4e8}
+.table-wrap{overflow-x:auto}table{border-collapse:collapse;width:100%;font-size:14px;margin:16px 0}th,td{border:1px solid #cbd1d8;padding:9px;text-align:left;vertical-align:top}th{background:#f0f3f6}
+pre{background:#f2f4f6;padding:14px;overflow-x:auto;font:14px/1.7 Consolas,monospace}code{font-family:Consolas,monospace;font-size:.92em}li{margin:6px 0}
+summary{cursor:pointer;font-weight:bold;padding:10px 0}object{width:100%;height:850px;border:1px solid #cbd1d8}
+@media(max-width:650px){header,main{padding:18px}section{padding:16px}nav{gap:14px}}
+@media print{body{background:#fff}nav,details{display:none}section,figure{border:0;break-inside:avoid}}
+</style></head><body><header><h1>Bitácora de campo - Grupo 04</h1>
+<p>Tarea 2.2 · Documentación y pruebas locales · 6 de noviembre de 2026</p>
+<nav><a href="#readme">Leer el README</a><a href="Informe_Tarea_2_2_Grupo04.pdf">Abrir el PDF</a><a href="#imagenes">Ver todas las imágenes</a><a href="postman/Bitacora-2.2.postman_collection.json">Colección de Postman</a></nav>
+</header><main><section id="version-actual"><h2>Informe actualizado</h2><p><a href="Informe_Tarea_2_2_Grupo04.pdf">Abrir el PDF actualizado</a> · <a href="Entrega_Tarea_2_2_Grupo04.zip">Descargar el paquete actualizado</a></p><details open><summary>Portada y ejemplo de una prueba</summary><img src="docs/vista_previa/portada_actual.png" alt="Portada actual del informe"><img src="docs/vista_previa/prueba_201_actual.png" alt="Página actual de creación con respuesta 201"></details></section><section id="readme"><h2>Bitácora de campo - Tarea 2.2</h2>
+<p>API REST en C# y ASP.NET Core para crear, listar, consultar, actualizar y eliminar registros de campo. Cada registro tiene un título, una descripción, una fotografía opcional en Base64 y una fecha de creación. Los datos se guardan en SQLite mediante Entity Framework Core.</p>
+<p>Las pruebas de esta entrega se realizan en local con Swagger y Postman. La aplicación Android corresponde a la tarea 2.3 y será un cliente de esta API.</p>
+<h3>Cómo ejecutar el proyecto</h3>
+<p>Se necesita <strong>.NET SDK 10</strong> y conexión a Internet para descargar las dependencias la primera vez. Postman se utiliza para repetir las pruebas. SQLite funciona con un archivo local; no hace falta instalar un servidor de bases de datos.</p>
+<p>Abre CMD en la carpeta que contiene <code>Bitacora.sln</code> y sigue estos pasos:</p>
+<ol>
+<li>Descarga las bibliotecas del proyecto:</li>
+<pre><code>dotnet restore Bitacora.sln</code></pre>
+<li>Restaura la herramienta de Entity Framework incluida en <code>dotnet-tools.json</code>:</li>
+<pre><code>dotnet tool restore</code></pre>
+<li>Crea o actualiza la base de datos con las migraciones incluidas:</li>
+<pre><code>dotnet ef database update --project src\Bitacora.Infrastructure --startup-project src\Bitacora.Api</code></pre>
+<li>Enciende la API con el perfil de desarrollo local:</li>
+<pre><code>dotnet run --project src\Bitacora.Api --launch-profile http</code></pre>
+</ol>
+<p>Mantén esa ventana abierta mientras haces las pruebas. Para detener la API, presiona <code>Ctrl+C</code>.</p>
+<div class="table-wrap"><table>
+<tr><th>Recurso</th><th>Dirección o ubicación</th></tr>
+<tr><td>API</td><td><code>http://localhost:5106/api/registros</code></td></tr>
+<tr><td>Swagger UI</td><td><code>http://localhost:5106/swagger</code></td></tr>
+<tr><td>OpenAPI</td><td><code>http://localhost:5106/openapi/v1.json</code></td></tr>
+<tr><td>Base SQLite</td><td><code>src/Bitacora.Api/App_Data/bitacora.db</code></td></tr>
+</table></div>
+<p>Swagger y OpenAPI están habilitados en el entorno de desarrollo. Cada compañero puede crear su propia base ejecutando las migraciones; no necesita recibir un archivo <code>.db</code>.</p>
+<h3>Organización</h3>
+<div class="table-wrap"><table>
+<tr><th>Proyecto</th><th>Contenido</th><th>Depende de</th></tr>
+<tr><td><code>Bitacora.Domain</code></td><td>Entidades y reglas del registro.</td><td>Ningún otro proyecto.</td></tr>
+<tr><td><code>Bitacora.Application</code></td><td>DTO, <code>RegistroService</code> e <code>IRegistroRepository</code>.</td><td>Domain.</td></tr>
+<tr><td><code>Bitacora.Infrastructure</code></td><td>Repositorio, EF Core, SQLite y migraciones.</td><td>Application y Domain.</td></tr>
+<tr><td><code>Bitacora.Api</code></td><td>Controlador, configuración y manejo de errores.</td><td>Application e Infrastructure.</td></tr>
+</table></div>
+<p>El recorrido de una petición es: <strong>Postman → controlador → servicio → repositorio → EF Core → SQLite</strong>. La API devuelve DTO y mantiene separadas las entidades de persistencia.</p>
+<h3>Endpoints</h3>
+<div class="table-wrap"><table>
+<tr><th>Método</th><th>Ruta</th><th>Respuesta correcta</th><th>Casos de error</th></tr>
+<tr><td>GET</td><td><code>/api/registros</code></td><td>200, lista sin la fotografía.</td><td>406 al solicitar XML.</td></tr>
+<tr><td>GET</td><td><code>/api/registros/{id}</code></td><td>200, detalle con fotografía.</td><td>404 si no existe.</td></tr>
+<tr><td>POST</td><td><code>/api/registros</code></td><td>201 y encabezado <code>Location</code>.</td><td>400 por datos inválidos.</td></tr>
+<tr><td>PUT</td><td><code>/api/registros/{id}</code></td><td>204, sin cuerpo.</td><td>400 o 404.</td></tr>
+<tr><td>DELETE</td><td><code>/api/registros/{id}</code></td><td>204, sin cuerpo.</td><td>404 si no existe.</td></tr>
+</table></div>
+<p>POST y PUT reciben JSON. Ejemplo:</p>
+<pre><code>{
+  &quot;titulo&quot;: &quot;Observación del río&quot;,
+  &quot;descripcion&quot;: &quot;El agua estaba turbia después de la lluvia.&quot;,
+  &quot;fotoBase64&quot;: null
+}</code></pre>
+<ul>
+<li>El título es obligatorio y debe tener entre 3 y 100 caracteres.</li>
+<li>La descripción es obligatoria y admite hasta 500 caracteres.</li>
+<li>La fotografía es opcional. Cuando se envía, debe ser Base64 válido, sin prefijo <code>data:image/...</code>, y no superar <strong>2 MiB decodificados (2 097 152 bytes)</strong>.</li>
+<li>El servidor asigna el ID y la fecha en UTC. La fecha se conserva al editar.</li>
+<li>Un PUT reemplaza los datos del registro; <code>fotoBase64: null</code> retira la fotografía.</li>
+</ul>
+<p>La base tiene las tablas <code>Registros</code> y <code>Fotografias</code>, relacionadas de uno a cero o una fotografía. Al borrar un registro se elimina también su foto. Los errores de validación devuelven 400 con mensajes por campo. El manejador global devuelve 500 con <code>ProblemDetails</code>, sin mostrar el detalle interno de la excepción.</p>
+<h3>Pruebas en Postman</h3>
+<ol>
+<li>Enciende la API.</li>
+<li>Importa la <a href="postman/Bitacora-2.2.postman_collection.json">colección</a> y el <a href="postman/Bitacora-local.postman_environment.json">entorno local</a>.</li>
+<li>Selecciona <strong>Bitácora - Local</strong> y comprueba que <code>baseUrl</code> sea <code>http://localhost:5106</code>.</li>
+<li>Abre <strong>Run collection</strong> y ejecuta las <strong>16 solicitudes en orden</strong>, con una iteración, desde el POST inicial.</li>
+</ol>
+<p>La colección incluye <strong>42 comprobaciones</strong> de casos correctos y errores esperados. Crea un registro, consulta y modifica sus datos, lo elimina y comprueba que ya no existe. También revisa datos inválidos, el encabezado <code>Location</code>, la fecha y la omisión de la foto en el listado. Si se interrumpe antes del DELETE, puede quedar el registro de prueba.</p>
+<p>En POST y PUT se usa <code>Content-Type: application/json</code>. El encabezado <code>Accept</code> es <code>application/json</code>, salvo la prueba que solicita XML para comprobar el error 406.</p>
+<h3>Documentación</h3>
+<ul>
+<li><a href="Vista_previa.html">Vista previa del README, el informe y todas las imágenes</a>.</li>
+<li><a href="Informe_Tarea_2_2_Grupo04.pdf">Informe PDF del Grupo 04</a>.</li>
+<li><a href="docs/Informe-2.2.md">Informe editable y responsabilidades del equipo</a>.</li>
+<li><a href="postman/RESULTADOS.md">Resultados de Postman</a>.</li>
+<li><a href="docs/imagenes/01_capas_dependencias.png">Diagrama de capas y dependencias</a>.</li>
+<li><a href="docs/imagenes/02_flujo_peticion.png">Flujo de una petición</a>.</li>
+<li><a href="docs/imagenes/03_modelo_datos.png">Modelo de datos</a>.</li>
+</ul>
+<h3>Grupo 04</h3>
+<p>Para la revisión y el cierre del proyecto, el trabajo se distribuye así:</p>
+<div class="table-wrap"><table>
+<tr><th>Integrante</th><th>Número de cuenta</th><th>Revisión asignada</th></tr>
+<tr><td>Hector Josue Nuñez Perdomo</td><td>202320120070</td><td>Entidades y validaciones del dominio.</td></tr>
+<tr><td>Jesus Andres Herrera Velasquez</td><td>202010010221</td><td>DTO, servicio y casos de uso de Application.</td></tr>
+<tr><td>Bessy Maribel Delcid Ruiz</td><td>202130120003</td><td>EF Core, SQLite y migraciones.</td></tr>
+<tr><td>Bellymar Celeste Amaya Andino</td><td>201820010372</td><td>Controlador, respuestas HTTP, errores y Swagger.</td></tr>
+<tr><td>Marlon Jared Saenz Blanco</td><td>202230010131</td><td>Colección de Postman, encabezados y resultados.</td></tr>
+<tr><td>Luis Eduardo Sagastume Rodríguez</td><td>201910040199</td><td>Informe, diagramas y guía de ejecución.</td></tr>
+</table></div>
+<p>Cada integrante revisará la parte asignada y registrará sus cambios en GitHub antes de la entrega.</p>
+<p>El repositorio de GitHub se publicará al final. Debe incluir el código, las migraciones y esta documentación, con aportes reales de los integrantes. El archivo <code>.gitignore</code> excluye los resultados de compilación y las bases de datos locales.</p></section>
+<section id="informe"><h2>Informe PDF</h2><p>Incluye portada institucional, arquitectura, capturas de Swagger y Postman, resultados y responsabilidades de revisión del equipo.</p>
+<p><a href="Informe_Tarea_2_2_Grupo04.pdf">Abrir el informe completo</a> · <a href="docs/Informe-2.2.md">Informe editable</a> · <a href="postman/RESULTADOS.md">Resultados de las pruebas</a></p>
+<details><summary>Mostrar el PDF aquí</summary><object data="Informe_Tarea_2_2_Grupo04.pdf" type="application/pdf"><p>Abre el enlace del informe para verlo.</p></object></details></section>
+<section id="imagenes"><h2>Diagramas y capturas</h2><p>Los diagramas también están disponibles en SVG editable. Las capturas originales se guardaron en PNG.</p></section>
+<figure><h3>Capas y dependencias</h3><p>Referencias entre los cuatro proyectos de la solución. <a href="docs/imagenes/01_capas_dependencias.png">Abrir imagen original</a> · <a href="docs/imagenes/01_capas_dependencias.svg">Abrir SVG editable</a></p><a href="docs/imagenes/01_capas_dependencias.png"><img src="docs/imagenes/01_capas_dependencias.png" alt="Capas y dependencias" loading="lazy"></a></figure>
+<figure><h3>Recorrido de una petición</h3><p>Ejemplo de creación desde Postman hasta SQLite. <a href="docs/imagenes/02_flujo_peticion.png">Abrir imagen original</a> · <a href="docs/imagenes/02_flujo_peticion.svg">Abrir SVG editable</a></p><a href="docs/imagenes/02_flujo_peticion.png"><img src="docs/imagenes/02_flujo_peticion.png" alt="Recorrido de una petición" loading="lazy"></a></figure>
+<figure><h3>Modelo de datos</h3><p>Tablas Registros y Fotografias, con una fotografía opcional por registro. <a href="docs/imagenes/03_modelo_datos.png">Abrir imagen original</a> · <a href="docs/imagenes/03_modelo_datos.svg">Abrir SVG editable</a></p><a href="docs/imagenes/03_modelo_datos.png"><img src="docs/imagenes/03_modelo_datos.png" alt="Modelo de datos" loading="lazy"></a></figure>
+<figure><h3>Swagger UI</h3><p>Las cinco operaciones disponibles en la API local. <a href="docs/imagenes/04_swagger.png">Abrir imagen original</a></p><a href="docs/imagenes/04_swagger.png"><img src="docs/imagenes/04_swagger.png" alt="Swagger UI" loading="lazy"></a></figure>
+<figure><h3>Creación correcta</h3><p>POST con fotografía: respuesta 201 Created y cinco comprobaciones aprobadas. <a href="docs/imagenes/05_postman_crear_201.png">Abrir imagen original</a></p><a href="docs/imagenes/05_postman_crear_201.png"><img src="docs/imagenes/05_postman_crear_201.png" alt="Creación correcta" loading="lazy"></a></figure>
+<figure><h3>Error de validación</h3><p>El título de dos caracteres se rechaza con 400 y un mensaje del campo Titulo. <a href="docs/imagenes/06_postman_error_400.png">Abrir imagen original</a></p><a href="docs/imagenes/06_postman_error_400.png"><img src="docs/imagenes/06_postman_error_400.png" alt="Error de validación" loading="lazy"></a></figure>
+<figure><h3>Ejecución completa en Postman</h3><p>42 comprobaciones aprobadas, cero fallos y cero errores. <a href="docs/imagenes/07_postman_runner.png">Abrir imagen original</a></p><a href="docs/imagenes/07_postman_runner.png"><img src="docs/imagenes/07_postman_runner.png" alt="Ejecución completa en Postman" loading="lazy"></a></figure></main></body></html>

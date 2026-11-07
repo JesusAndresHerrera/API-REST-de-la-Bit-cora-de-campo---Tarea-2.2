@@ -1,0 +1,39 @@
+BITÁCORA DE CAMPO — TAREA 2.2
+Prueba local del 6 de noviembre de 2026
+Ejecutor: Newman 6.2.3
+Inicio: 2026-11-06T23:01:39.592000-06:00 (Honduras)
+Fin: 2026-11-06T23:01:43.224000-06:00 (Honduras)
+Resultado: 16 solicitudes, 42 comprobaciones aprobadas, 0 fallidas y 0 errores.
+Colección: postman/Bitacora-2.2.postman_collection.json
+SHA256: 93312c004a23d27cd754227f103dc68cab56199a5418869b2e436d09a5f904d1
+
+Casos ejecutados:
+01 POST - Crear con fotografía (201): POST /api/registros -> 201 (5 comprobaciones aprobadas)
+02 GET - Listar sin fotografías (200): GET /api/registros -> 200 (3 comprobaciones aprobadas)
+03 GET - Formato XML no disponible (406): GET /api/registros -> 406 (2 comprobaciones aprobadas)
+04 GET - Consultar detalle con fotografía (200): GET /api/registros/4 -> 200 (2 comprobaciones aprobadas)
+05 POST - Título demasiado corto (400): POST /api/registros -> 400 (3 comprobaciones aprobadas)
+06 POST - Base64 inválido (400): POST /api/registros -> 400 (3 comprobaciones aprobadas)
+07 POST - Descripción de 501 caracteres (400): POST /api/registros -> 400 (3 comprobaciones aprobadas)
+08 POST - Foto de más de 2 MiB (400): POST /api/registros -> 400 (3 comprobaciones aprobadas)
+09 PUT - Entrada inválida (400): PUT /api/registros/4 -> 400 (3 comprobaciones aprobadas)
+10 PUT - Editar y quitar fotografía (204): PUT /api/registros/4 -> 204 (2 comprobaciones aprobadas)
+11 GET - Verificar actualización y fecha (200): GET /api/registros/4 -> 200 (3 comprobaciones aprobadas)
+12 DELETE - Eliminar el registro propio (204): DELETE /api/registros/4 -> 204 (2 comprobaciones aprobadas)
+13 GET - Detalle del registro eliminado (404): GET /api/registros/4 -> 404 (2 comprobaciones aprobadas)
+14 PUT - Actualizar el registro eliminado (404): PUT /api/registros/4 -> 404 (2 comprobaciones aprobadas)
+15 DELETE - Repetir la eliminación (404): DELETE /api/registros/4 -> 404 (2 comprobaciones aprobadas)
+16 GET - Confirmar limpieza (200): GET /api/registros -> 200 (2 comprobaciones aprobadas)
+
+Encabezados revisados:
+Accept: application/json en 15 solicitudes. Una solicitud pide XML para comprobar el error 406.
+Content-Type: application/json en las 8 solicitudes POST y PUT.
+POST exitoso: 201 y Location con la ruta del registro creado.
+Respuestas correctas: JSON. Errores 400, 404 y 406: application/problem+json.
+PUT y DELETE exitosos: 204 sin cuerpo ni Content-Type.
+No se encontraron encabezados duplicados.
+
+Se usó una copia aislada de SQLite. Empezó y terminó con cero registros y cero fotografías.
+El entorno entregado conserva baseUrl=http://localhost:5106; la prueba usó un puerto local libre.
+Esta ejecución corresponde a Newman, no a una nueva ejecución en la interfaz de Postman.
+El error 500 se comprobó por separado y no está incluido en estas 16 solicitudes.
